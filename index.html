@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moroccan Language Learner - Darija Only</title>
+    
+    <!-- Google Fonts for Pixel style -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    <!-- Internal CSS -->
+    <style>
+        :root {
+            /* Warna terinspirasi bendera Maroko */
+            --flag-red: #C1272D;
+            --flag-green: #006233;
+
+            /* Warna untuk elemen aplikasi */
+            --body-bg-dark: #A42025; /* Merah gelap untuk latar belakang utama */
+            --body-bg-gradient: #8C1B1F; /* Merah lebih gelap untuk gradien latar belakang */
+            --card-main-bg: #FFFBF0; /* Krem/putih pucat untuk latar belakang kartu */
+            --card-border-color: var(--flag-green); /* Hijau untuk batas kartu */
+            --card-inner-border: #004020; /* Hijau lebih gelap untuk batas dalam */
+            --text-primary: #5C1417; /* Merah gelap untuk teks utama pada latar terang */
+            --text-light: #ffffff; /* Putih untuk teks pada latar gelap */
+            --desc-box-bg: #e6e6e6; /* Abu-abu terang untuk kotak deskripsi */
+            --button-main-bg-start: #007A3B; /* Hijau terang untuk gradien tombol utama */
+            --button-main-bg-end: var(--flag-green); /* Hijau bendera untuk gradien tombol utama */
+            --button-hover-start: #009144; /* Hijau lebih terang untuk hover tombol */
+            --button-hover-end: #007A3B; /* Hijau terang untuk hover tombol */
+            --button-back-bg: #6c757d; /* Abu-abu untuk tombol kembali */
+            --text-shadow-color: var(--flag-green); /* Hijau untuk bayangan teks judul */
+        }
+
+        html {
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Press Start 2P', cursive;
+            background-color: var(--body-bg-dark);
+            /* Pola latar belakang baru: garis diagonal */
+            background-image: repeating-linear-gradient(
+                -45deg,
+                var(--body-bg-gradient),
+                var(--body-bg-gradient) 10px,
+                var(--body-bg-dark) 10px,
+                var(--body-bg-dark) 20px
+            );
+            background-size: 20px 20px; /* Ukuran pola */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            min-height: 100vh;
+        }
+        
+        #main-container {
+             background-color: transparent;
+             border: none;
+             box-shadow: none;
+             text-align: center;
+             width: 100%;
+             max-width: 420px; 
+             margin: auto;
+        }
+
+        /* --- Menu Styles --- */
+        .menu-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .menu-screen h1, .menu-screen h2 {
+            font-size: 2rem;
+            color: var(--text-light); /* Judul putih */
+            text-shadow: 2px 2px 0px var(--text-shadow-color), 4px 4px 0px var(--card-inner-border); /* Bayangan hijau */
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        #welcome-screen h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+        #welcome-screen p.subtitle {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .menu-screen h2 {
+            font-size: 1.5rem;
+        }
+        .menu-screen p {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        .menu-buttons {
+            display: grid;
+            gap: 1rem;
+            width: 100%;
+        }
+        .menu-btn {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1rem;
+            padding: 1rem;
+            border: 3px solid var(--card-inner-border); /* Batas tombol hijau gelap */
+            border-radius: 10px;
+            background: linear-gradient(145deg, var(--button-main-bg-start), var(--button-main-bg-end)); /* Gradien hijau */
+            color: var(--text-light);
+            cursor: pointer;
+            box-shadow: inset -2px -4px 0px rgba(0,0,0,0.2);
+            transition: all 0.1s ease-in-out;
+        }
+        .menu-btn:hover {
+             background: linear-gradient(145deg, var(--button-hover-start), var(--button-hover-end)); /* Gradien hijau saat hover */
+        }
+        .back-btn {
+            margin-top: 1rem;
+            background-color: var(--button-back-bg); /* Warna tombol kembali */
+        }
+
+        /* --- Title Style for Learning Mode --- */
+        #learning-mode-title {
+            font-size: 1.2rem;
+            color: var(--text-light); /* Judul putih */
+            text-shadow: 2px 2px 0px var(--text-shadow-color), 3px 3px 0px var(--card-inner-border); /* Bayangan hijau */
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            line-height: 1.4;
+        }
+
+        /* --- Card Structure --- */
+        #card-app {
+            min-height: 300px;
+        }
+        
+        #flashcard {
+            background: var(--card-main-bg); /* Latar belakang kartu krem/putih pucat */
+            border: 10px solid var(--card-border-color); /* Batas kartu hijau */
+            border-radius: 20px;
+            padding: 20px;
+            width: 100%;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.3), inset 0 0 0 5px #fcdf70; /* Pertahankan efek kuning terang pada insert shadow */
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            min-height: 320px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        #card-prompt {
+            font-size: 1.6rem;
+            color: var(--text-primary); /* Teks utama merah gelap */
+            margin: 0 0 20px 0;
+            text-transform: uppercase;
+            line-height: 1.4;
+            text-align: center;
+        }
+        
+        .card-body {
+            background-color: var(--desc-box-bg);
+            border: 3px solid var(--card-border-color); /* Batas kotak deskripsi hijau */
+            border-radius: 10px;
+            padding: 15px;
+            color: var(--text-primary); /* Teks kotak deskripsi merah gelap */
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .translation-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        #translation-display {
+            font-size: 1.3rem;
+            text-align: center;
+            color: var(--text-primary); /* Teks terjemahan merah gelap */
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        #pronunciation-display {
+            font-size: 0.75rem;
+            font-style: italic;
+            text-align: center;
+            color: var(--text-primary); /* Teks pengucapan merah gelap */
+            opacity: 0.8;
+            margin: 0;
+            line-height: 1.2;
+        }
+        
+        /* --- Navigation --- */
+        #navigation-controls {
+            margin-top: 1.5rem;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        #navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .nav-btn {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.8rem;
+            padding: 0.8rem;
+            border: 3px solid var(--card-inner-border); /* Batas tombol nav hijau gelap */
+            border-radius: 10px;
+            background-color: var(--card-border-color); /* Latar belakang tombol nav hijau */
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.1s ease-in-out;
+            white-space: nowrap;
+        }
+
+        #card-counter {
+            font-size: 1rem;
+            color: var(--text-light); /* Teks penghitung kartu putih */
+            padding: 0 10px;
+        }
+        
+        #back-to-category-btn { /* Changed ID */
+            margin-top: 1rem;
+            width: 100%;
+            background-color: var(--button-back-bg); /* Warna tombol kembali */
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <div id="main-container">
+        
+        <div id="welcome-screen" class="menu-screen">
+            <h1>Moroccan Learner</h1>
+            <p class="subtitle">LEARN DARIJA</p>
+            <div class="menu-buttons">
+                <button id="start-app-btn" class="menu-btn">Start Learning</button>
+            </div>
+        </div>
+
+        <div id="main-menu" class="menu-screen hidden">
+            <h2>Language Selection</h2>
+            <p>You will be learning Darija.</p>
+            <div class="menu-buttons">
+                <button id="select-darija-btn" class="menu-btn">Start Darija</button>
+                <!-- Removed Tamazight button -->
+            </div>
+        </div>
+
+        <div id="introduction-screen" class="menu-screen hidden">
+            <h2 id="introduction-title"></h2>
+            <p id="introduction-text"></p>
+            <div class="menu-buttons">
+                <button id="continue-to-categories-btn" class="menu-btn">Continue</button>
+                <button id="back-to-languages-btn" class="menu-btn back-btn">Back to Main Menu</button>
+            </div>
+        </div>
+
+        <div id="category-selection-menu" class="menu-screen hidden">
+            <h2 id="category-menu-title"></h2>
+            <p>Select a topic to learn.</p>
+            <div class="menu-buttons">
+                <button id="select-benda-btn" class="menu-btn">Objects</button>
+                <button id="select-buah-btn" class="menu-btn">Fruits</button>
+                <button id="select-angka-btn" class="menu-btn">Numbers</button>
+                <button id="select-warna-btn" class="menu-btn">Colors</button>
+                <button id="select-frasa-umum-btn" class="menu-btn">General Phrases</button>
+                <button id="select-frasa-perjalanan-btn" class="menu-btn">Travel Phrases</button>
+                <button id="back-to-intro-btn" class="menu-btn back-btn">Back</button>
+            </div>
+        </div>
+
+        <div id="card-app" class="hidden">
+            <h2 id="learning-mode-title"></h2>
+            <div id="flashcard">
+                <h2 id="card-prompt">Loading...</h2>
+                <div class="card-body">
+                    <div class="translation-container">
+                        <p id="translation-display">...</p>
+                        <p id="pronunciation-display">(...)</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="navigation-controls">
+                <div id="navigation">
+                    <button id="prev-btn" class="nav-btn">&lt; Prev</button>
+                    <p id="card-counter">1 / 10</p>
+                    <button id="next-btn" class="nav-btn">Next &gt;</button>
+                </div>
+                <button id="back-to-category-btn" class="nav-btn">Back</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // --- DATABASES ---
+        const flashcard_data = {
+            darija: {
+                benda: [
+                    { id: 1, english: "House", darija: "Dar", pronunciation_darija: "Dar" },
+                    { id: 2, english: "Book", darija: "Ktab", pronunciation_darija: "K-tab" },
+                    { id: 3, english: "Car", darija: "Tomobil", pronunciation_darija: "To-mo-bil" },
+                    { id: 4, english: "Table", darija: "Tbla", pronunciation_darija: "T-bla" },
+                    { id: 5, english: "Chair", darija: "Kursi", pronunciation_darija: "Kur-si" },
+                    { id: 6, english: "Door", darija: "Bab", pronunciation_darija: "Bab" },
+                    { id: 7, english: "Window", darija: "Sarjem", pronunciation_darija: "Sar-jem" },
+                    { id: 8, english: "Key", darija: "Sarout", pronunciation_darija: "Sa-rout" },
+                    { id: 9, english: "Phone", darija: "Tili", pronunciation_darija: "Ti-li" },
+                    { id: 10, english: "Computer", darija: "Pc / Kamputer", pronunciation_darija: "Pi-si / Kam-pu-ter" },
+                    { id: 11, english: "Bag", darija: "Ṣak", pronunciation_darija: "Sak" },
+                    { id: 12, english: "Pen", darija: "Stilo", pronunciation_darija: "Sti-lo" },
+                    { id: 13, english: "Water bottle", darija: "Qar3a d lma", pronunciation_darija: "Qar-a d l-ma" },
+                    { id: 14, english: "Glass", darija: "Kass", pronunciation_darija: "Kass" },
+                    { id: 15, english: "Plate", darija: "Tbaṣl", pronunciation_darija: "T-ba-ṣl" }
+                ],
+                buah: [
+                    { id: 16, english: "Apple", darija: "Teffaḥ", pronunciation_darija: "Tef-faH" },
+                    { id: 17, english: "Orange", darija: "Limun", pronunciation_darija: "Li-moon" },
+                    { id: 18, english: "Banana", darija: "Banane", pronunciation_darija: "Ba-nan" },
+                    { id: 19, english: "Grape", darija: "3nab", pronunciation_darija: "3-nab" },
+                    { id: 20, english: "Watermelon", darija: "Dellaḥ", pronunciation_darija: "Del-laH" },
+                    { id: 21, english: "Peach", darija: "Khokh", pronunciation_darija: "Khokh" },
+                    { id: 22, english: "Cherry", darija: "Ḥab lmoulouk", pronunciation_darija: "Hab l-moo-look" },
+                    { id: 23, english: "Strawberry", darija: "Fraise", pronunciation_darija: "Fraise" },
+                    { id: 24, english: "Fig", darija: "Karmous", pronunciation_darija: "Kar-moos" },
+                    { id: 25, english: "Date (fruit)", darija: "Tmar", pronunciation_darija: "T-mar" },
+                    { id: 26, english: "Lemon", darija: "Ḥamd", pronunciation_darija: "Ḥamd" },
+                    { id: 27, english: "Pomegranate", darija: "Rmmãn", pronunciation_darija: "R-mman" },
+                    { id: 28, english: "Pear", darija: "Bo3wid", pronunciation_darija: "Bo3-wid" },
+                    { id: 29, english: "Avocado", darija: "Avoka", pronunciation_darija: "A-vo-ka" },
+                    { id: 30, english: "Kiwi", darija: "Kiwi", pronunciation_darija: "Ki-wi" }
+                ],
+                angka: [
+                    { id: 31, english: "One", darija: "Waḥed", pronunciation_darija: "Wa-hed" },
+                    { id: 32, english: "Two", darija: "Joj", pronunciation_darija: "Joj" },
+                    { id: 33, english: "Three", darija: "Tlata", pronunciation_darija: "Tla-ta" },
+                    { id: 34, english: "Four", darija: "Rb3a", pronunciation_darija: "R-ba3" },
+                    { id: 35, english: "Five", darija: "Khmssa", pronunciation_darija: "Khms-sa" },
+                    { id: 36, english: "Six", darija: "Stta", pronunciation_darija: "S-tta" },
+                    { id: 37, english: "Seven", darija: "Sb3a", pronunciation_darija: "S-ba3" },
+                    { id: 38, english: "Eight", darija: "Tmenya", pronunciation_darija: "T-men-ya" },
+                    { id: 39, english: "Nine", darija: "Ts3oud", pronunciation_darija: "Ts-aoud" },
+                    { id: 40, english: "Ten", darija: "3achra", pronunciation_darija: "3ach-ra" },
+                    { id: 41, english: "Eleven", darija: "Ḥdaš", pronunciation_darija: "Hdash" },
+                    { id: 42, english: "Twelve", darija: "Tnaš", pronunciation_darija: "Tnash" },
+                    { id: 43, english: "Thirteen", darija: "Tleṭṭaš", pronunciation_darija: "Tleṭ-ṭash" },
+                    { id: 44, english: "Fourteen", darija: "Rb3ṭṭaš", pronunciation_darija: "Rb3-ṭṭash" },
+                    { id: 45, english: "Fifteen", darija: "Xmstaš", pronunciation_darija: "Xms-tash" }
+                ],
+                warna: [
+                    { id: 46, english: "Red", darija: "Ḥmer", pronunciation_darija: "Hmer" },
+                    { id: 47, english: "Green", darija: "Khḍer", pronunciation_darija: "Kh-der" },
+                    { id: 48, english: "Blue", darija: "Zreq", pronunciation_darija: "Z-req" },
+                    { id: 49, english: "Yellow", darija: "Sfer", pronunciation_darija: "Sfer" },
+                    { id: 50, english: "Black", darija: "Kḥel", pronunciation_darija: "K-hel" },
+                    { id: 51, english: "White", darija: "Byed", pronunciation_darija: "Byed" },
+                    { id: 52, english: "Orange", darija: "Limuni", pronunciation_darija: "Li-mu-ni" },
+                    { id: 53, english: "Purple", darija: "Mov", pronunciation_darija: "Mov" },
+                    { id: 54, english: "Pink", darija: "Wardy", pronunciation_darija: "War-dy" },
+                    { id: 55, english: "Grey", darija: "Rmadi", pronunciation_darija: "R-ma-di" },
+                    { id: 56, english: "Brown", darija: "Qehwi", pronunciation_darija: "Qeh-wi" },
+                    { id: 57, english: "Light (color)", darija: "Foteḥ", pronunciation_darija: "Fo-teḥ" },
+                    { id: 58, english: "Dark (color)", darija: "Ghameq", pronunciation_darija: "Gha-meq" },
+                    { id: 59, english: "Golden", darija: "Dhebi", pronunciation_darija: "Dhe-bi" },
+                    { id: 60, english: "Silver", darija: "Feḍḍi", pronunciation_darija: "Feḍ-ḍi" }
+                ],
+                frasa_umum: [
+                    { id: 61, english: "Hello", darija: "Salam", pronunciation_darija: "Sa-lam" },
+                    { id: 62, english: "Thank you", darija: "Shukran", pronunciation_darija: "Shook-ran" },
+                    { id: 63, english: "How are you?", darija: "Kif dayer? (m) / Kif dayra? (f)", pronunciation_darija: "Kif da-yer / Kif da-y-ra" },
+                    { id: 64, english: "My name is...", darija: "Smiti...", pronunciation_darija: "Smi-ti" },
+                    { id: 65, english: "Please", darija: "Afak", pronunciation_darija: "A-fak" },
+                    { id: 66, english: "You (singular)", darija: "Nta (m) / Nti (f)", pronunciation_darija: "N-ta / N-ti" },
+                    { id: 67, english: "Good (adj.)", darija: "Mzyan (m) / Mzyana (f)", pronunciation_darija: "M-zyan / M-zya-na" },
+                    { id: 68, english: "Yes", darija: "Na'am", pronunciation_darija: "Na-am" },
+                    { id: 69, english: "No", darija: "La", pronunciation_darija: "La" },
+                    { id: 70, english: "Excuse me / Sorry", darija: "Smahli (m) / Smalhili (f)", pronunciation_darija: "Sma-hli / Sma-hli-li" },
+                    { id: 71, english: "Goodbye", darija: "Bslama", pronunciation_darija: "B-sla-ma" },
+                    { id: 72, english: "Welcome", darija: "Marhaba", pronunciation_darija: "Mar-ha-ba" },
+                    { id: 73, english: "I am hungry", darija: "Fia jou3", pronunciation_darija: "Fi-ya joo3" },
+                    { id: 74, english: "I am thirsty", darija: "Fia l'3tash", pronunciation_darija: "Fi-ya l-a-tash" },
+                    { id: 75, english: "It's delicious!", darija: "Bniiin!", pronunciation_darija: "Bni-in" },
+                    { id: 76, english: "I don't know", darija: "Ma 3reftch", pronunciation_darija: "Ma 3ref-tch" },
+                    { id: 77, english: "What is this?", darija: "Aš hada? (m) / Aš hadi? (f)", pronunciation_darija: "Ash ha-da / Ash ha-di" },
+                    { id: 78, english: "Where are you from?", darija: "Mnin nta? (m) / Mnin nti? (f)", pronunciation_darija: "Mnin n-ta / Mnin n-ti" },
+                    { id: 79, english: "I am from...", darija: "Ana mn...", pronunciation_darija: "A-na mn" },
+                    { id: 80, english: "How old are you?", darija: "Šḥal f 3mrek?", pronunciation_darija: "ShHal f 3m-rek" }
+                ],
+                frasa_perjalanan: [
+                    { id: 81, english: "Where is...?", darija: "Fin kayna...?", pronunciation_darija: "Fin kay-na" },
+                    { id: 82, english: "How much?", darija: "Bchhal?", pronunciation_darija: "B-chhal" },
+                    { id: 83, english: "I want...", darija: "Bghit...", pronunciation_darija: "Bghi-t" },
+                    { id: 84, english: "Can you help me?", darija: "Wach tqdar t3awenni? (m) / Wach tqdri t3awnini? (f)", pronunciation_darija: "Wash t-qdar t-a-wen-ni / Wash t-q-dri t-a-w-ni-ni" },
+                    { id: 85, english: "I don't understand", darija: "Ma fhemtch", pronunciation_darija: "Ma fhem-tch" },
+                    { id: 86, english: "Go straight", darija: "Sir nishan", pronunciation_darija: "Sir ni-shan" },
+                    { id: 87, english: "Turn right", darija: "Dor 3la limin", pronunciation_darija: "Dor 3la li-min" },
+                    { id: 88, english: "Turn left", darija: "Dor 3la lissar", pronunciation_darija: "Dor 3la lis-sar" },
+                    { id: 89, english: "Bus station", darija: "Maḥaṭṭet l-bus", pronunciation_darija: "Ma-haṭ-ṭet l-bus" },
+                    { id: 90, english: "Taxi", darija: "Taxi", pronunciation_darija: "Ta-xi" },
+                    { id: 91, english: "Airport", darija: "Maṭar", pronunciation_darija: "Ma-ṭar" },
+                    { id: 92, english: "Train station", darija: "Maḥaṭṭet ttran", pronunciation_darija: "Ma-ḥaṭ-ṭet ttran" },
+                    { id: 93, english: "Hotel", darija: "Fondok", pronunciation_darija: "Fon-dok" },
+                    { id: 94, english: "Restaurant", darija: "Maṭ3am", pronunciation_darija: "Maṭ-3am" },
+                    { id: 95, english: "Market", darija: "Souk", pronunciation_darija: "Souk" }
+                ]
+            }
+        };
+
+        const introduction_text = {
+            darija: "Darija is the Moroccan Arabic dialect, spoken by the majority of Moroccans. It's influenced by Berber, French, and Spanish, making it unique.",
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- DOM ELEMENTS ---
+            const screens = {
+                welcome: document.getElementById('welcome-screen'),
+                mainMenu: document.getElementById('main-menu'),
+                introduction: document.getElementById('introduction-screen'),
+                categorySelection: document.getElementById('category-selection-menu'),
+                cardApp: document.getElementById('card-app')
+            };
+
+            // Buttons
+            const startAppBtn = document.getElementById('start-app-btn');
+            const selectDarijaBtn = document.getElementById('select-darija-btn');
+            const continueToCategoriesBtn = document.getElementById('continue-to-categories-btn');
+            const backToLanguagesBtn = document.getElementById('back-to-languages-btn');
+            
+            // Category Buttons
+            const selectBendaBtn = document.getElementById('select-benda-btn');
+            const selectBuahBtn = document.getElementById('select-buah-btn');
+            const selectAngkaBtn = document.getElementById('select-angka-btn');
+            const selectWarnaBtn = document.getElementById('select-warna-btn');
+            const selectFrasaUmumBtn = document.getElementById('select-frasa-umum-btn');
+            const selectFrasaPerjalananBtn = document.getElementById('select-frasa-perjalanan-btn');
+
+            const backToIntroBtn = document.getElementById('back-to-intro-btn');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const backToCategoryBtn = document.getElementById('back-to-category-btn');
+
+            // Display Elements
+            const introductionTitle = document.getElementById('introduction-title');
+            const introductionTextEl = document.getElementById('introduction-text');
+            const categoryMenuTitle = document.getElementById('category-menu-title');
+            const learningModeTitle = document.getElementById('learning-mode-title');
+            const cardPrompt = document.getElementById('card-prompt');
+            const translationDisplay = document.getElementById('translation-display');
+            const pronunciationDisplay = document.getElementById('pronunciation-display');
+            const cardCounter = document.getElementById('card-counter');
+
+            // --- APP STATE ---
+            let currentMoroccanLanguage = 'darija'; // Default to Darija
+            let currentCategory = '';
+            let currentIndex = 0;
+            let currentDatabase = [];
+
+            // --- FUNCTIONS ---
+            function showScreen(screenToShow) {
+                Object.values(screens).forEach(screen => screen.classList.add('hidden'));
+                screenToShow.classList.remove('hidden');
+            }
+
+            // Simplified: Automatically select Darija and show introduction
+            function showDarijaIntroduction() {
+                currentMoroccanLanguage = 'darija'; // Ensure language is set to Darija
+                introductionTitle.innerText = `About Darija`;
+                introductionTextEl.innerText = introduction_text.darija;
+                showScreen(screens.introduction);
+            }
+
+            function startLearningCategory(category) {
+                currentCategory = category;
+                currentDatabase = flashcard_data[currentMoroccanLanguage][currentCategory];
+                currentIndex = 0;
+                displayCard();
+                showScreen(screens.cardApp);
+            }
+
+            function displayCard() {
+                const item = currentDatabase[currentIndex];
+                const pronunciationKey = 'pronunciation_' + currentMoroccanLanguage;
+                
+                const displayCategory = currentCategory.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
+
+                learningModeTitle.innerText = `${currentMoroccanLanguage.charAt(0).toUpperCase() + currentMoroccanLanguage.slice(1)} - ${displayCategory}`;
+                cardPrompt.innerText = item.english;
+                translationDisplay.innerText = item[currentMoroccanLanguage];
+                pronunciationDisplay.innerText = `(${item[pronunciationKey]})`;
+                cardCounter.innerText = `${currentIndex + 1} / ${currentDatabase.length}`;
+            }
+
+            function showNextCard() {
+                currentIndex = (currentIndex + 1) % currentDatabase.length;
+                displayCard();
+            }
+
+            function showPrevCard() {
+                currentIndex = (currentIndex - 1 + currentDatabase.length) % currentDatabase.length;
+                displayCard();
+            }
+
+            // --- EVENT LISTENERS ---
+            startAppBtn.addEventListener('click', () => showScreen(screens.mainMenu));
+            
+            // Changed the logic for language selection since only Darija is left
+            selectDarijaBtn.addEventListener('click', showDarijaIntroduction);
+
+            backToLanguagesBtn.addEventListener('click', () => showScreen(screens.mainMenu));
+            continueToCategoriesBtn.addEventListener('click', () => {
+                categoryMenuTitle.innerText = `${currentMoroccanLanguage.charAt(0).toUpperCase() + currentMoroccanLanguage.slice(1)} Categories`;
+                showScreen(screens.categorySelection);
+            });
+
+            backToIntroBtn.addEventListener('click', () => showScreen(screens.introduction));
+            
+            // Category Button Listeners
+            selectBendaBtn.addEventListener('click', () => startLearningCategory('benda'));
+            selectBuahBtn.addEventListener('click', () => startLearningCategory('buah'));
+            selectAngkaBtn.addEventListener('click', () => startLearningCategory('angka'));
+            selectWarnaBtn.addEventListener('click', () => startLearningCategory('warna'));
+            selectFrasaUmumBtn.addEventListener('click', () => startLearningCategory('frasa_umum'));
+            selectFrasaPerjalananBtn.addEventListener('click', () => startLearningCategory('frasa_perjalanan'));
+
+            nextBtn.addEventListener('click', showNextCard);
+            prevBtn.addEventListener('click', showPrevCard);
+            backToCategoryBtn.addEventListener('click', () => showScreen(screens.categorySelection));
+        });
+    </script>
+</body>
+</html>
